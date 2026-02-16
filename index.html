@@ -1,22 +1,24 @@
 ---
-user_name: "Mistress Angel Story"
-user_bio: "Mistress Angel adalah wanita"
-main_cover: "https://via.placeholder.com/1000x1000"
+user_name: Mistress Angel
+user_bio: >-
+  Mistress Angel adalah wanita dominan yang dingin dan sadis, yang memegang
+  kendali mutlak atas para budaknya. Ia memperlakukan mereka dengan disiplin
+  keras dan menuntut kepatuhan budaknya di setiap detik. Dengan sikap kejamnya
+  dan kata-kata yang tajam, ia membangun tekanan konstan yang membuat para
+  budaknya hidup di bawah bayang-bayang otoritasnya, sebuah kehadiran yang
+  sekaligus menakutkan dan tak terbantahkan.
+main_cover:
 stories:
-  - title: "Maaf Life Rusak"
-    image: "https://via.placeholder.com/500x500"
-    desc: "Sinopsis singkat..."
-    full_story: "Isi lengkap cerita..."
-  - title: "Habis Memakai Air Mohon Mati"
-    image: "https://via.placeholder.com/500x500"
-    desc: "Sinopsis singkat..."
-    full_story: "Isi lengkap cerita..."
+  - title: Habis Memakai Air Mohon Mati
+    image:
+    desc: Sinopsis singkat...
+    full_story: Isi lengkap cerita...
 ---
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ page.user_name }}</title>
     <style>
         body { background: #000; color: #fff; margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
@@ -44,7 +46,7 @@ stories:
 <body>
 
     <div id="home">
-        <img src="{{ page.main_cover }}" class="main-img">
+        <img src="{{ page.main_cover }}" class="main-img" />
         
         <div class="profile-section">
             <h1>{{ page.user_name }}</h1>
@@ -54,7 +56,7 @@ stories:
         <div class="story-grid">
             {% for story in page.stories %}
             <div class="story-item" onclick="openStory('{{ story.title | escape }}', '{{ story.full_story | escape }}')">
-                <img src="{{ story.image }}">
+                <img src="{{ story.image }}" />
                 <div class="story-title">{{ story.title }}</div>
             </div>
             {% endfor %}
