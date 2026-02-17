@@ -1,17 +1,14 @@
 ---
 user_name: Mistress Angel Story
-user_bio: Sadistic Female Dominan.
+user_bio: 'Mistress '
 main_cover: uploads/ma.jpg
 stories:
   - title: DOMINATRIX MISTRESS ANGEL
     image: uploads/dominatrix.jpg
-    desc: Tulis deskripsi di sini...
-    full_story: >-
-      Gw menyetir mobil sambil membawa sebotol air kencing, untuk menemui
-      seorang pria yang akan menjadi budak gw.  Sesampainya di tempat tujuan, gw
-      turun dari mobil dan duduk di kursi trotoar jalan. Tak lama, seorang pria
-      menghampiri gw.  Slave: Kak Angel ya?  Mistress Angel: Iya, lo yang mau
-      jadi budak gw?  Slave: Iya kak
+    desc: |-
+      Tulis deskripsi di sini...
+    full_story: |-
+      Tulis cerita di sini...
 _inputs:
   main_cover:
     type: image
@@ -28,13 +25,13 @@ _inputs:
           desc:
             type: textarea
           full_story:
-            type: textarea
+            type: markdown
 ---
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.user_name }}</title>
     <style>
         :root { --bg: #000000; --text: #e0e0e0; --red: #AF1D20; --card: #161616; }
@@ -108,10 +105,11 @@ _inputs:
         }
         function openRead() {
             document.getElementById('read-title').innerText = document.getElementById('det-title').innerText;
-            document.getElementById('read-content').innerText = currentFullStory;
+            // Membersihkan tag markdown agar yang muncul hanya teks bersih
+            document.getElementById('read-content').innerText = currentFullStory.replace(/<[^>]*>?/gm, '');
             document.getElementById('page-read').style.display = 'block';
         }
         function closeP(id) { document.getElementById(id).style.display = 'none'; }
     </script>
 </body>
-  </html>
+</html>
