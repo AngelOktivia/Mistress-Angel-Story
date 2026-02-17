@@ -7,8 +7,7 @@ stories:
     image: uploads/dominatrix.jpg
     desc: |-
       Tulis deskripsi di sini...
-    full_story: |-
-      Tulis cerita di sini...
+    full_story: uploads/ma.jpg
 _inputs:
   main_cover:
     type: image
@@ -25,7 +24,7 @@ _inputs:
           desc:
             type: textarea
           full_story:
-            type: textarea
+            type: image
 ---
 <!DOCTYPE html>
 <html lang="id">
@@ -42,14 +41,12 @@ _inputs:
 
         .container { max-width: 600px; margin: 0 auto; padding: 25px; }
         
-        /* UKURAN TEKS SESUAI DESKRIPSI (TIDAK KEBESARAN) */
-        .read-content { 
-            line-height: 2.0;    /* Spasi antar baris tetap lega */
-            font-size: 16px;      /* Ukuran sama dengan teks deskripsi sebelumnya */
-            color: #d1d1d1; 
-            white-space: pre-wrap; 
-            text-align: left;
-            word-wrap: break-word; /* Memastikan teks tidak meluber ke kanan */
+        /* TAMPILAN GAMBAR CERITA FULL */
+        .read-content img { 
+            width: 100%; 
+            height: auto; 
+            display: block; 
+            margin-top: 10px;
         }
 
         .cover-box { width: 100%; aspect-ratio: 1/1; background: #333; overflow: hidden; }
@@ -70,7 +67,7 @@ _inputs:
         <div class="profile-info"><h1>{{ page.user_name }}</h1><p>{{ page.user_bio }}</p></div>
         <div class="story-grid">
             {% for story in page.stories %}
-            <div class="story-item" onclick="openDetail('{{ story.title | escape }}', '{{ story.image }}', '{{ story.desc | escape }}', '{{ story.full_story | escape }}')">
+            <div class="story-item" onclick="openDetail('{{ story.title | escape }}', '{{ story.image }}', '{{ story.desc | escape }}', '{{ story.full_story }}')">
                 <img src="{{ story.image }}" /><div style="padding:10px; font-size:12px;">{{ story.title }}</div>
             </div>
             {% endfor %}
@@ -88,24 +85,25 @@ _inputs:
         </div>
     </div>
     <div id="page-read">
-        <div class="container">
-            <button onclick="closeP('page-read')" style="color:#888; background:none; border:none; padding:10px 0;">← Tutup</button>
-            <h2 id="read-title" style="border-bottom: 1px solid var(--red); padding-bottom:10px;"></h2>
-            <div id="read-content" class="read-content"></div>
+        <div class="container" style="padding: 0;"> <button onclick="closeP('page-read')" style="color:#888; background:none; border:none; padding:15px;">← Tutup</button>
+            <h2 id="read-title" style="padding: 0 15px 10px; border-bottom: 1px solid var(--red); font-size: 20px;"></h2>
+            <div id="read-content" class="read-content">
+                <img src="" id="story-photo" />
+            </div>
         </div>
     </div>
     <script>
-        let currentFullStory = "";
-        function openDetail(title, img, desc, full) {
+        let currentFullStoryImg = "";
+        function openDetail(title, img, desc, fullImg) {
             document.getElementById('det-title').innerText = title;
             document.getElementById('det-img').src = img;
             document.getElementById('det-desc').innerText = desc;
-            currentFullStory = full;
+            currentFullStoryImg = fullImg;
             document.getElementById('page-detail').style.display = 'block';
         }
         function openRead() {
             document.getElementById('read-title').innerText = document.getElementById('det-title').innerText;
-            document.getElementById('read-content').innerText = currentFullStory;
+            document.getElementById('story-photo').src = currentFullStoryImg;
             document.getElementById('page-read').style.display = 'block';
         }
         function closeP(id) { document.getElementById(id).style.display = 'none'; }
