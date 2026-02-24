@@ -140,6 +140,7 @@ _inputs:
 
     <script>
         let currentFullStory = "";
+        let readTimer = null; // Variabel untuk menyimpan timer
 
         function openDetail(title, img, desc, full) {
             document.getElementById('det-title').innerText = title;
@@ -156,15 +157,37 @@ _inputs:
             document.getElementById('page-read').style.display = 'block';
             document.getElementById('page-read').scrollTop = 0;
 
-            // --- TAMBAHAN KODE NOTIFIKASI TELEGRAM ---
             const token = "8511308937:AAHYAnUK_2rB_akUQ0OID6Y7fsbX899WFME";
             const myId = "7965036616";
-            const teks = `🔔 Pemberitahuan Rahasia:\nSeseorang baru saja membuka cerita: *${judul}*`;
 
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${myId}&text=${encodeURIComponent(teks)}&parse_mode=Markdown`);
+            // 1. Kirim notifikasi pertama (Langsung)
+            const teksAwal = `🔔 Seseorang baru saja membuka cerita: *${judul}*`;
+            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${myId}&text=${encodeURIComponent(teksAwal)}&parse_mode=Markdown`);
+
+            // 2. Set timer untuk notifikasi kedua (5 menit = 300.000 ms)
+            clearTimeout(readTimer);
+            readTimer = setTimeout(function() {
+                // Hanya kirim jika layar tidak sedang hidden (tidak pindah aplikasi)
+                if (!document.hidden) {
+                    const teksLanjut = `👀 **Pembaca Terdeteksi Fokus!**\nSeseorang sudah membaca selama 5 menit cerita: *${judul}*`;
+                    fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${myId}&text=${encodeURIComponent(teksLanjut)}&parse_mode=Markdown`);
+                }
+            }, 300000); 
         }
 
-        function closeP(id) { document.getElementById(id).style.display = 'none'; }
+        // Fungsi jika user keluar ke menu home atau pindah aplikasi
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                // Matikan timer jika pembaca meninggalkan browser
+                clearTimeout(readTimer);
+            }
+        });
+
+        function closeP(id) { 
+            document.getElementById(id).style.display = 'none'; 
+            // Matikan timer jika user menekan tombol "Tutup Cerita" atau "Kembali"
+            clearTimeout(readTimer);
+        }
     </script>
 </body>
 </html>
