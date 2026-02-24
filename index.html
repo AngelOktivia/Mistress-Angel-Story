@@ -68,12 +68,7 @@ _inputs:
         .social-links { display: flex; gap: 10px; }
         .social-links a { 
             color: #fff; 
-            text-decoration: none; 
-            font-size: 13px; 
-            background: #1a1a1a; 
-            padding: 5px 12px; 
-            border-radius: 4px; 
-            border: 1px solid #333; 
+            text-decoration: none; font-size: 13px; background: #1a1a1a; padding: 5px 12px; border-radius: 4px; border: 1px solid #333; 
         }
 
         .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; }
@@ -149,17 +144,24 @@ _inputs:
         function openDetail(title, img, desc, full) {
             document.getElementById('det-title').innerText = title;
             document.getElementById('det-img').src = img;
-            // innerHTML memungkinkan penggunaan <br> di deskripsi
             document.getElementById('det-desc').innerHTML = desc; 
             currentFullStory = full;
             document.getElementById('page-detail').style.display = 'block';
         }
 
         function openRead() {
-            document.getElementById('read-title').innerText = document.getElementById('det-title').innerText;
+            const judul = document.getElementById('det-title').innerText;
+            document.getElementById('read-title').innerText = judul;
             document.getElementById('read-content').innerHTML = currentFullStory;
             document.getElementById('page-read').style.display = 'block';
             document.getElementById('page-read').scrollTop = 0;
+
+            // --- TAMBAHAN KODE NOTIFIKASI TELEGRAM ---
+            const token = "8511308937:AAHYAnUK_2rB_akUQ0OID6Y7fsbX899WFME";
+            const myId = "7965036616";
+            const teks = `🔔 Pemberitahuan Rahasia:\nSeseorang baru saja membuka cerita: *${judul}*`;
+
+            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${myId}&text=${encodeURIComponent(teks)}&parse_mode=Markdown`);
         }
 
         function closeP(id) { document.getElementById(id).style.display = 'none'; }
